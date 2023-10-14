@@ -24,12 +24,6 @@ class MyPage extends StatelessWidget {
         title: Text('Appbar icon menu'),
         centerTitle: true,
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            print('menu button is clicked');
-          },
-        ),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -44,6 +38,66 @@ class MyPage extends StatelessWidget {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(padding: EdgeInsets.zero, children: [
+          UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: AssetImage('assets/panda.png'),
+              backgroundColor: Colors.white,
+            ),
+            otherAccountsPictures: [
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/hi.gif'),
+                backgroundColor: Colors.white,
+              ),
+            ],
+            accountName: Text('PANDA'),
+            accountEmail: Text('panda@panda.com'),
+            onDetailsPressed: () {
+              print('arrow is Clicked');
+            },
+            decoration: BoxDecoration(
+                color: Colors.red[200],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40.0),
+                  bottomRight: Radius.circular(40.0),
+                )),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              color: Colors.grey[850],
+            ),
+            title: Text('HOME'),
+            onTap: () {
+              print('Home is clicked');
+            },
+            trailing: Icon(Icons.add),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.settings,
+              color: Colors.grey[850],
+            ),
+            title: Text('Settings'),
+            onTap: () {
+              print('Settings is clicked');
+            },
+            trailing: Icon(Icons.add),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.question_answer,
+              color: Colors.grey[850],
+            ),
+            title: Text('Q&A'),
+            onTap: () {
+              print('Q&A is clicked');
+            },
+            trailing: Icon(Icons.add),
+          ),
+        ]),
       ),
     );
   }
