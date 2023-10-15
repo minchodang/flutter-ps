@@ -21,29 +21,35 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appbar icon menu'),
+        title: Text('Snack Bar'),
         centerTitle: true,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
+      ),
+      body: Center(
+        child: TextButton(
+          child: Text(
+            'Show me',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.red,
+          ),
           onPressed: () {
-            print('menu button is clicked');
+            final snackBar = SnackBar(
+              content: Text(
+                'hello!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              backgroundColor: Colors.teal,
+              duration: Duration(milliseconds: 1000),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           },
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              print('Shopping cart button is clicked');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              print('Search icon button is clicked');
-            },
-          ),
-        ],
       ),
     );
   }
