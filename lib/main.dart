@@ -21,33 +21,19 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Toast message'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            flutterToast();
-          },
-          child: Text(
-            'toast',
-            style: TextStyle(color: Colors.white),
-          ),
-          style: FilledButton.styleFrom(backgroundColor: Colors.red),
+      backgroundColor: Colors.blue,
+      body: SafeArea(
+          child: Container(
+        color: Colors.red,
+        width: 100,
+        height: 100,
+        margin: EdgeInsets.symmetric(
+          vertical: 80,
+          horizontal: 20,
         ),
-      ),
+        padding: EdgeInsets.all(20),
+        child: Text('Hello'),
+      )),
     );
   }
-}
-
-void flutterToast() {
-  Fluttertoast.showToast(
-    msg: 'flutter',
-    gravity: ToastGravity.BOTTOM,
-    backgroundColor: Colors.redAccent,
-    fontSize: 20,
-    textColor: Colors.white,
-    toastLength: Toast.LENGTH_SHORT,
-  );
 }
