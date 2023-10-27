@@ -12,28 +12,50 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyPage(),
+      home: FirstPage(),
     );
   }
 }
 
-class MyPage extends StatelessWidget {
+class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('First Page'),
+      ),
       backgroundColor: Colors.blue,
-      body: SafeArea(
-          child: Container(
-        color: Colors.red,
-        width: 100,
-        height: 100,
-        margin: EdgeInsets.symmetric(
-          vertical: 80,
-          horizontal: 20,
+      body: Center(
+        child: ElevatedButton(
+          child: Text("go to second page"),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => SecondPage()));
+          },
         ),
-        padding: EdgeInsets.all(20),
-        child: Text('Hello'),
-      )),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  const SecondPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Page'),
+      ),
+      backgroundColor: Colors.blue,
+      body: Center(
+        child: ElevatedButton(
+          child: Text("go to First page"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
     );
   }
 }
