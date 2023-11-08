@@ -3,59 +3,70 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Appbar',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: FirstPage(),
-    );
-  }
-}
-
-class FirstPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('First Page'),
-      ),
-      backgroundColor: Colors.blue,
-      body: Center(
-        child: ElevatedButton(
-          child: Text("go to second page"),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SecondPage()));
-          },
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Second Page'),
-      ),
-      backgroundColor: Colors.blue,
-      body: Center(
-        child: ElevatedButton(
-          child: Text("go to First page"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
+        home: Scaffold(
+          appBar: AppBar(),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('You have pushed the button this many times:'),
+                Text(
+                  '$counter',
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FloatingActionButton(
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        setState(() {
+                          counter++;
+                          print("$counter");
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    FloatingActionButton(
+                      child: Icon(Icons.remove),
+                      onPressed: () {
+                        setState(() {
+                          counter--;
+                          print("$counter");
+                        });
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              setState(() {
+                counter++;
+                print("$counter");
+              });
+            },
+          ),
+        ));
   }
 }
