@@ -1,72 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_application_1/ScreenA.dart';
+import 'package:flutter_application_1/ScreenB.dart';
+import 'package:flutter_application_1/ScreenC.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyAppState();
-  }
-}
-
-class MyAppState extends State<MyApp> {
-  int counter = 0;
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          appBar: AppBar(),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('You have pushed the button this many times:'),
-                Text(
-                  '$counter',
-                  style: Theme.of(context).textTheme.displayMedium,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FloatingActionButton(
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        setState(() {
-                          counter++;
-                          print("$counter");
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    FloatingActionButton(
-                      child: Icon(Icons.remove),
-                      onPressed: () {
-                        setState(() {
-                          counter--;
-                          print("$counter");
-                        });
-                      },
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-              setState(() {
-                counter++;
-                print("$counter");
-              });
-            },
-          ),
-        ));
+      initialRoute: '/',
+      routes: {
+        '/': (context) => ScreenA(),
+        '/b': (context) => ScreenB(),
+        '/c': (context) => ScreenC(),
+      },
+    );
   }
 }
