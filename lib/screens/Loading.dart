@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/dice.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -32,9 +34,18 @@ class _LoadingState extends State<Loading> {
   };
 
   void fetchData() async {
-    Response response = await get(Uri.parse(
+    http.Response response = await http.get(Uri.parse(
         'https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1'));
-    print(response);
+    if (response.statusCode == 200) {
+      String jsonData = response.body;
+      var myJson = jsonDecode(jsonData)['weather'][0]['description'];
+      print(myJson);
+      var wind = jsonDecode(jsonData)['wind']['speed'];
+      print(wind);
+      var id = jsonDecode(jsonData)['id'];
+      print(id);
+    }
+    // print(response.body);
   }
 
   @override
