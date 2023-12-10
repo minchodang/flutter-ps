@@ -1,9 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/dice.dart';
+import 'package:flutter_application_1/data/my_location.dart';
+import 'package:flutter_application_1/data/network.dart';
+import 'package:flutter_application_1/screens/weather_screen.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
+
+const apiKey = 'e6993106a205fa7ebeeaa50999622284';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -13,39 +14,49 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  double? latitude3, longitude3;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getLocation();
-    fetchData();
   }
 
-  var currentPosition;
-  Function getLocation = () async {
-    LocationPermission permission = await Geolocator.requestPermission();
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      showToast(position.toString());
-    } catch (e) {
-      print('위치정보 실패입니다.');
-    }
-  };
+  void getLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
 
-  void fetchData() async {
-    http.Response response = await http.get(Uri.parse(
-        'https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1'));
-    if (response.statusCode == 200) {
-      String jsonData = response.body;
-      var myJson = jsonDecode(jsonData)['weather'][0]['description'];
-      print(myJson);
-      var wind = jsonDecode(jsonData)['wind']['speed'];
-      print(wind);
-      var id = jsonDecode(jsonData)['id'];
-      print(id);
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // 위치 권한이 거부되었습니다.
+        return;
+      }
     }
-    // print(response.body);
+
+    if (permission == LocationPermission.deniedForever) {
+      // 위치 권한이 영구적으로 거부되었습니다. 사용자에게 설정 변경을 요청하세요.
+      return;
+    }
+
+    // 위치 정보 가져오기
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    double latitude = position.latitude;
+    double longitude = position.longitude;
+
+    Network network = Network(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric');
+
+    var weatherData = await network.getJsonData();
+    print(weatherData);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WeatherScreen(
+        parseWeatherData: weatherData,
+      );
+    }));
   }
 
   @override
