@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Loading.dart';
+import 'package:flutter_application_1/screens/key/PositionedTile.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,10 +9,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( 
+    return MaterialApp(
       title: 'Weather app',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Loading(),
+      home: PositionedTile(),
     );
   }
 }
