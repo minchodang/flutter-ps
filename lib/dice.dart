@@ -26,11 +26,11 @@ class _DiceState extends State<Dice> {
             padding: const EdgeInsets.all(32.0),
             child: Row(
               children: [
-                Expanded(child: Image.asset('image/dice$leftDice.png')),
+                Expanded(child: Image.asset('image/other/dice$leftDice.png')),
                 SizedBox(
                   width: 20,
                 ),
-                Expanded(child: Image.asset('image/dice$rightDice.png')),
+                Expanded(child: Image.asset('image/other/dice$rightDice.png')),
               ],
             ),
           ),

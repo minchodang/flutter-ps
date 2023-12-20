@@ -69,6 +69,7 @@ flutter:
     - assets/panda.png
     - assets/hi.gif
     - image/weather/
+    - image/other/
     - svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see

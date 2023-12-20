@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/Loading.dart';
-import 'package:flutter_application_1/screens/key/PositionedTile.dart';
+import 'package:flutter_application_1/dice.dart';
+import 'package:flutter_application_1/screens/key/KeyLogin.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather app',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: PositionedTile(),
+      home: KeyLogin(),
     );
   }
 }
