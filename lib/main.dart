@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/Loading.dart';
-import 'package:flutter_application_1/screens/weather_screen.dart';
+import 'package:flutter_application_1/screens/chat/main_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'weather application',
       scaffoldMessengerKey: rootScaffoldKey,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Loading(),
+      home: LoginSignupScreen(),
     );
   }
 }
