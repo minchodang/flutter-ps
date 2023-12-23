@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/my_location.dart';
 import 'package:flutter_application_1/data/network.dart';
 import 'package:flutter_application_1/screens/weather_screen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 
 const apiKey = 'e6993106a205fa7ebeeaa50999622284';
@@ -65,20 +66,11 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style = ElevatedButton.styleFrom(
-      backgroundColor: Colors.blue,
-    );
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: null,
-          child: Text(
-            'Get my location',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          style: style,
+        child: SpinKitDoubleBounce(
+          color: Colors.blueAccent,
+          size: 80,
         ),
       ),
     );

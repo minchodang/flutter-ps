@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/dice.dart';
-import 'package:flutter_application_1/screens/key/KeyLogin.dart';
-import 'package:flutter_application_1/screens/key/MyKey.dart';
-import 'package:flutter_application_1/screens/key/ScaffoldKey.dart';
+import 'package:flutter_application_1/screens/Loading.dart';
+import 'package:flutter_application_1/screens/weather_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,10 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'scaffold key',
+      title: 'weather application',
       scaffoldMessengerKey: rootScaffoldKey,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: ScaffoldKey(),
+      home: Loading(),
     );
   }
 }
