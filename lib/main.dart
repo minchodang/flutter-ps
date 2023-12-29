@@ -1,30 +1,125 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/chat/main_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
+import "package:flutter/material.dart";
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeDefault();
-  runApp(MyApp());
+import 'package:webview_flutter/webview_flutter.dart';
+
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+
+void main() {
+  runApp(const MyApp());
 }
-
-Future<void> initializeDefault() async {
-  FirebaseApp app = await Firebase.initializeApp();
-  print('intiallized default app $app');
-}
-
-final rootScaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'weather application',
-      scaffoldMessengerKey: rootScaffoldKey,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginSignupScreen(),
+    return const MaterialApp(
+      title: 'Flutter App',
+      home: WebViewPage(),
+    );
+  }
+}
+
+class WebViewPage extends StatefulWidget {
+  const WebViewPage({super.key});
+
+  @override
+  State<WebViewPage> createState() => _WebViewPageState();
+}
+
+class _WebViewPageState extends State<WebViewPage> {
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    late final PlatformWebViewControllerCreationParams params;
+
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+      );
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
+
+    final WebViewController controller =
+        WebViewController.fromPlatformCreationParams(params);
+
+    controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            debugPrint('WebView is loading (progress : $progress%)');
+          },
+          onPageStarted: (String url) {
+            debugPrint('Page started loading: $url');
+          },
+          onPageFinished: (String url) {
+            debugPrint('Page finished loading: $url');
+          },
+          onWebResourceError: (WebResourceError error) {
+            debugPrint('''
+        
+        
+          
+                        Page resource error:
+
+                          code: ${error.errorCode}
+        
+        
+          
+                          description: ${error.description}
+        
+        
+          
+                          errorType: ${error.errorType}
+        
+        
+          
+                          isForMainFrame: ${error.isForMainFrame}
+        
+        
+          
+                    ''');
+          },
+          onNavigationRequest: (NavigationRequest request) {
+            debugPrint('allowing navigation to ${request.url}');
+
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..addJavaScriptChannel(
+        'Toaster',
+        onMessageReceived: (JavaScriptMessage message) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message.message)),
+          );
+        },
+      )
+      ..loadRequest(Uri.parse('http://192.168.1.166:3000/more/tip/404'));
+
+    if (controller.platform is AndroidWebViewController) {
+      AndroidWebViewController.enableDebugging(true);
+
+      (controller.platform as AndroidWebViewController)
+          .setMediaPlaybackRequiresUserGesture(false);
+    }
+
+    _controller = controller;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: WebViewWidget(controller: _controller),
     );
   }
 }

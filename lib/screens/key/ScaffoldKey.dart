@@ -14,23 +14,23 @@ class ScaffoldKey extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.thumb_up),
         onPressed: () {
-          rootScaffoldKey.currentState?.showSnackBar(
-            SnackBar(
-              content: Text('I like a new SnackBar!!'),
-              duration: Duration(seconds: 5),    
-              action: SnackBarAction(
-                label: 'undo',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ThirdPage(),
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
+          // rootScaffoldKey.currentState?.showSnackBar(
+          //   SnackBar(
+          //     content: Text('I like a new SnackBar!!'),
+          //     duration: Duration(seconds: 5),
+          //     action: SnackBarAction(
+          //       label: 'undo',
+          //       onPressed: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => ThirdPage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // );
         },
       ),
     );
