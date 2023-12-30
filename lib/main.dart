@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/chat/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/counter-stream.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'weather application',
       scaffoldMessengerKey: rootScaffoldKey,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginSignupScreen(),
+      home: CounterStream(),
     );
   }
 }
