@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/counter-stream.dart';
+import 'package:flutter_application_1/firebase_options.dart';
+import 'package:flutter_application_1/screens/chat/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +10,9 @@ void main() async {
 }
 
 Future<void> initializeDefault() async {
-  FirebaseApp app = await Firebase.initializeApp();
+  FirebaseApp app = await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   print('intiallized default app $app');
 }
 
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'weather application',
       scaffoldMessengerKey: rootScaffoldKey,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: CounterStream(),
+      home: LoginSignupScreen(),
     );
   }
 }
