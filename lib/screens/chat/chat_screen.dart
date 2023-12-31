@@ -42,7 +42,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 onPressed: () async {
                   try {
                     await _authentication.signOut();
-                    Navigator.pop(context);
                   } catch (error) {
                     print(error);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
