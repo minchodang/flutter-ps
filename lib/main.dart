@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:flutter_application_1/provider/fish_model.dart';
+import 'package:flutter_application_1/provider/seafish_model.dart';
 import 'package:flutter_application_1/screens/chat/chat_screen.dart';
 import 'package:flutter_application_1/screens/chat/main_screen.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => FishModel(name: 'Salmon', number: 6, size: 'Big'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) =>
+              FishModel(name: 'Salmon', number: 6, size: 'Big'),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              SeaFishModel(name: 'Tuna', tunaNumber: 6, size: 'Middle'),
+        )
+      ],
       child: MaterialApp(
         home: FishOrder(),
       ),
@@ -80,7 +90,7 @@ class SpicyA extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Fish number: ${Provider.of<FishModel>(context).number}',
+          'Tuna number: ${Provider.of<SeaFishModel>(context).tunaNumber}',
           style: TextStyle(
             fontSize: 16,
             color: Colors.red,
@@ -88,7 +98,7 @@ class SpicyA extends StatelessWidget {
           ),
         ),
         Text(
-          'Fish size: ${Provider.of<FishModel>(context).size}',
+          'Tuna size: ${Provider.of<SeaFishModel>(context).size}',
           style: TextStyle(
             fontSize: 16,
             color: Colors.red,
@@ -154,7 +164,17 @@ class SpicyB extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        Low()
+        ElevatedButton(
+          onPressed: () {
+            Provider.of<SeaFishModel>(context, listen: false)
+                .changeSeaFishNumber();
+          },
+          child: Text('Sea fish number'),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Low(),
       ],
     );
   }
@@ -206,6 +226,12 @@ class SpicyC extends StatelessWidget {
         ),
         SizedBox(
           height: 20,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Provider.of<FishModel>(context, listen: false).changeFishNumber();
+          },
+          child: Text('Change fish number'),
         ),
       ],
     );
