@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/dice.dart';
+import 'package:flutter_application_1/screens/key/KeyLogin.dart';
 
 class FireStorePage extends StatefulWidget {
   const FireStorePage({Key? key}) : super(key: key);
@@ -13,6 +15,70 @@ class _FireStorePageState extends State<FireStorePage> {
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final isDeletedBtn = false;
+
+  void DeleteDialog(productId) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            title: Column(
+              children: <Widget>[
+                Row(
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      '경고',
+                    )
+                  ],
+                )
+              ],
+            ),
+            //
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text('정말 삭제하시겠습니까?'),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () async {
+                        await _delete(productId);
+                        Navigator.pop(context);
+                      },
+                      child: Text('삭제')),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('취소'))
+                ],
+              )
+            ],
+          );
+        });
+  }
 
   Future<void> _update(DocumentSnapshot documentSnapshot) async {
     nameController.text = documentSnapshot['name'];
@@ -126,6 +192,9 @@ class _FireStorePageState extends State<FireStorePage> {
 
   Future<void> _delete(String productId) async {
     await product.doc(productId).delete();
+    // showToast('데이터가 삭제되었습니다.');
+    final snackBar = SnackBar(content: Text('데이터가 삭제되었습니다.'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -165,9 +234,8 @@ class _FireStorePageState extends State<FireStorePage> {
                               icon: Icon(Icons.edit),
                             ),
                             IconButton(
-                              onPressed: () {
-                                _delete(documentSnapshot.id);
-                              },
+                              onPressed: () =>
+                                  DeleteDialog(documentSnapshot.id),
                               icon: Icon(Icons.delete),
                             )
                           ],
