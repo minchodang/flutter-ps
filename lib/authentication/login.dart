@@ -1,7 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/authentication/signup.dart';
-
+import 'package:flutter_application_1/user/pages/main_screen.dart';
+import 'package:flutter_application_1/user/user_pref.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+
+import '../api/api.dart';
+import '../model/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,6 +23,37 @@ class _LoginPageState extends State<LoginPage> {
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+
+  userLogin() async {
+    try {
+      var res = await http.post(Uri.parse(API.login), body: {
+        'user_email': emailController.text.trim(),
+        'user_password': passwordController.text.trim()
+      });
+
+      if (res.statusCode == 200) {
+        var resLogin = jsonDecode(res.body);
+        if (resLogin['success'] == true) {
+          Fluttertoast.showToast(msg: 'Login successfully');
+          User userInfo = User.fromJson(resLogin['userData']);
+
+          await RememberUser.saveRememberUserInfo(userInfo);
+
+          Get.to(MainScreen());
+
+          setState(() {
+            emailController.clear();
+            passwordController.clear();
+          });
+        } else {
+          Fluttertoast.showToast(msg: 'Please check your email and password');
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +144,11 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      userLogin();
+                    }
+                  },
                   child: Container(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -134,10 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text('Not a member?'),
                     GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignupPage())),
+                      onTap: () => Get.to(() => SignupPage()),
                       child: Text(
                         ' Register Now!',
                         style: TextStyle(

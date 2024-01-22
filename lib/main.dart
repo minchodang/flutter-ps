@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/authentication/login.dart';
+import 'package:get/get.dart';
+import 'authentication/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,9 +12,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.red),
+    return GetMaterialApp(
+      theme: ThemeData(primaryColor: Colors.blue),
       home: LoginPage(),
     );
   }
