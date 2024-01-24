@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/json_parse.dart';
 import 'package:get/get.dart';
 import 'authentication/login.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(primaryColor: Colors.blue),
-      home: LoginPage(),
+      home: JsonParse(),
     );
   }
 }
