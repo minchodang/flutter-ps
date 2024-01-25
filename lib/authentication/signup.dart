@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/api/api.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -211,7 +212,7 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
                     Text('Already registered?'),
                     GestureDetector(
-                      onTap: () => (),
+                      onTap: () => Get.back(),
                       child: Text(
                         ' Go back Login page!',
                         style: TextStyle(
