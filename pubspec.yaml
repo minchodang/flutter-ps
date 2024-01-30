@@ -77,6 +77,7 @@ flutter:
   assets:
     - assets/panda.png
     - assets/hi.gif
+    - assets/fruit.jpg
     - image/weather/
     - image/other/
     - svg/
